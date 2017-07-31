@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>YoHoHoHo</title>
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/uielements.css">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400i,700,700i&amp;subset=cyrillic" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js" data-require="angularjs@1.4" data-semver="1.4.4"></script>
+
+</head>
+<body ng-app="appShop" ng-controller="StoreController">
+    <header class="b-header">
+        <div class="header__info">
+            <div class="b-container">
+                <div class="l-block b_col_1 header__info__phone header__info__phone_ico">
+                    Оптовый склад в Москве
+                    <div class="header__info__phone_text">+7 (499) 126 84 69</div>
+                </div>
+                <div class="l-block b_col_1 header__info__phone">
+                    Отдел сбыта в Москве
+                    <div class="header__info__phone_text">+7 (495) 974 90 28</div>
+                </div>
+                <div class="l-block b_col_2 header__cart">
+                    <div class="header__cart__ico" ng-click="showCart = !showCart">
+                        Корзина
+                    </div>
+                    <div class="header__cart_desc" ng-if="total_count == 0">вы еще ничего не заказали</div>
+                    <div class="header__cart_desc" ng-if="total_count > 0">В корзине {{total_count}} товара(ов) <br>на сумму {{total }}р</div>
+                    <div ng-show="showCart" class="header_cart_popup">
+
+                        <div class="b-item-cart-wrap">
+                            <button class="b-cart__close" ng-click="showCart = !showCart"></button>
+                            <div class="b-item-cart" ng-repeat="c in cart">
+                                <div class="b-item-cart__img">
+                                    <img src="{{c.image}}" alt="">
+                                </div>
+                                <div class="b-item-cart__title">{{c.name}}</div>
+                                <div class="b-item-cart__price">
+                                    Кол-во: {{c.count}} <br> Цена: {{c.price*c.count }}р
+                                </div>
+                                <div class="b-item-cart__links">
+                                    <button class="btn b-item__buy" ng-click="removeItemCart(c)">X</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="b-item-cart-wrap-total">Всего : {{total }}р</div>
+
+                    </div>
+                </div>
+                <div class="r-block b_col_1 header__login">
+                    <img class="header__login__ico" src="images/ico_user.png" alt="">
+                    <a class="header__login__ico__text b-links">
+
+                        Войти
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="header__logo">
+            <div class="b-container">
+                <div class="header__logo__img">
+                    <img src="images/LOGO.png" alt="">
+                </div>
+                <h1 class="header__logo__title">
+                    LEO VENTONI
+                </h1>
+                <div class="header__logo__text">
+                    Оптовый магазин кожгалантереи
+                </div>
+            </div>
+        </div>
+    </header>
+    <nav class="b-nav">
+        <ul class="b-nav_menu b-container">
+
+            <li class="b-nav_menu-item">КОМПАНИЯ</li>
+            <li class="b-nav_menu-item">МАГАЗИН</li>
+            <li class="b-nav_menu-item">БРЕНДЫ</li>
+            <li class="b-nav_menu-item">СОТРУДНИЧЕСТВО</li>
+            <li class="b-nav_menu-item">НОВОСТИ</li>
+            <li class="b-nav_menu-item">КОНТАКТЫ</li>
+        </ul>
+    </nav>
+    <div class="slider">
+        <div >
+            <div ng-controller="ResponsiveCarousel" id="controls">
+                <div>
+                    <carousel interval="carouselTimer">
+                        <slide ng-repeat="slide in slides" active="slide.active">
+                            <img ng-src="{{slide.image}}">
+                            <div class="carousel-caption">
+                                <div class="banner-big-text">{{slide.cap1}}</div>
+                                <div class="banner-middle-text">{{slide.cap2}}</div>
+                                <div class="banner-p">{{slide.cap3}}</div>
+                                <button class="banner-link">{{slide.cap4}}</button>
+
+                            </div>
+                        </slide>
+                    </carousel>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 class="b-container b-title_text">
+        Станьте партнером крупнейшего производителя кожгалантереи на Российском рынке
+    </h2>
+    <div class="b-block b-promo b-container">
+        <div class="b-promo__p b_col_1">
+            <h4 class="title_m b-promo__title__ico1">
+                Качество
+            </h4>
+            <p class="b-promo__text">
+                Мы гарантируем качество
+                и узнаваемость бренда.
+                Все продукты проходят
+                тщательный контроль.
+            </p>
+        </div>
+        <div class="b-promo__p b_col_1">
+            <h4 class="title_m b-promo__title__ico2">
+                Условия
+            </h4>
+            <p class="b-promo__text">
+                Мы предоставляем
+                прозрачные уловия
+                сотрудничества. Каждый
+                клиент остается доволен.
+            </p>
+        </div>
+        <div class="b-promo__p b_col_1">
+            <h4 class="title_m b-promo__title__ico3">
+                Доставка
+            </h4>
+            <p class="b-promo__text">
+                Мы осуществляем
+                бесплатную доставку
+                по Москве и области.
+                Всегда точно в срок.
+            </p>
+        </div>
+        <div class="b-promo__p b_col_1">
+            <h4 class="title_m b-promo__title__ico4">
+                Консультации
+            </h4>
+            <p class="b-promo__text">
+                Мы проводим бесплатные
+                консультации по любым
+                вопросам сотрудничества.
+            </p>
+        </div>
+        <div class="b_col_1 b-promo-btn_wrap">
+            <button class="btn b-promo__btn b_col_1">Заказать звонок</button>
+        </div>
+
+
+    </div>
+    <div class="b-block b-main b-container" >
+        <div class="l-block b-sidebar b_col_1">
+                <div class="search">
+                    <button class="search__btn" ></button>
+                    <input type="search" placeholder="поиск" class="input__text search__input" ng-model="searchText">
+
+                </div>
+            <h3 class="title_l b_block_padding" ng-click="setGroup()">Каталог</h3>
+            <div   ng-repeat="category in categories | orderBy: 'id' " >
+            <h4 class="title_c b_block_padding">{{category.name}}</h4>
+            <ul class="catalog-list" >
+                <li class="" ng-repeat="sub in category.subcategories | orderBy: 'id' " >
+                    <a ng-click="setGroup(sub.id); setActive(sub)" class="catalog-list__item" ng-class="{active : activeMenu === sub}"> {{sub.name}} ({{ ($parent.items | isCategory: sub.id ).length }}) </a>
+                    <ul class="catalog-list__child">
+                        <li class="" ng-repeat="subsub in sub.subcategories | orderBy: 'id' ">
+                            <a ng-click="setGroup(subsub.id); setActive(subsub)" class="catalog-list__child__item" ng-class="{active : activeMenu === subsub}">{{subsub.name}} ({{ ($parent.items | isCategory: subsub.id ).length }})</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            </div>
+        </div>
+        <div class="l-block b-content b_col_4">
+            <h1 class="title_b">ТОП ПРОДАЖ</h1>
+            <div class="b-content__filter">
+                <a href="" class="b-content__filter__active b-content__filter__link">Топ продаж(125)</a>
+                <a href="" class="b-content__filter__link">Новинки(134)</a>
+                <a href="" class="b-content__filter__link">Акции(34)</a>
+            </div>
+
+            <div class="b-content__items">
+
+
+                <div class="b-item" ng-repeat="item in filterData = (items | filter:searchText | isCategory:selectedGroup ) | limitTo:numPerPage:(currentPage - 1) * numPerPage">
+
+                    <div class="b-item__img">
+                        <img src="{{item.image}}" alt="">
+                    </div>
+                    <div class="b-item__title">{{item.category}} {{item.name}}</div>
+                    <div class="b-item__price">
+                        {{item.price}}р
+                    </div>
+                    <div class="b-item__links">
+                        <button class="btn b-item__buy" ng-click="addItemToCart(item)">Купить</button>
+                        <span class="b-item__add_to_cart" ng-click="addItemToCart(item)">В корзину</span>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <pagination
+                    class="pagination-sm pagination"
+                    total-items="filterData.length"
+                    items-per-page= "numPerPage"
+                    ng-model="currentPage"
+                    ng-change="pageChanged()"
+                    previous-text="&lsaquo;"
+                    next-text="&rsaquo;">
+            </pagination>
+
+        </div>
+    </div>
+    <div class="b-block b-info b-container">
+        <div class="l-block b_col_3">
+            <h1 class="title_l">Интернет-магазин элитной кожгалантереи</h1>
+            <p class="b-block_p">Компания Leo Ventoni присутствует на Российском рынке более 15 лет, с 1996 года. Основным направлением деятельности Leo Ventoni является оптовая торговля, где позиция одного из крупнейших и интереснейших поставщиков качественной кожгалантереи и эффектных аксессуаров, надежно удерживается компанией много лет.
+                </p>
+            <p class="b-block_p">
+            Среди <a href="" class="b-links">брендов</a> представляемых нами на российском рынке, следует выделить 4 бренда, официальными представителями которых компания является:
+            </p>
+            <ul class="b-block_p">
+                <li>Leo Ventoni</li>
+                <li>Fabretti</li>
+                <li>Palio</li>
+                <li>Galaday</li>
+            </ul>
+
+        </div>
+        <div class="l-block b_col_2" ng-controller="GetNews">
+            <h1 class="title_l title_link">Новости</h1>
+            <div class="b-news" ng-repeat="onenews in news | limitTo: 2">
+                <a href="" class="b-news-title">{{onenews.title}}</a>
+                <date class="b-news_date">{{onenews.date}}</date>
+                <div class="b-news_desc">
+                    {{onenews.description}}
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <section class="b-footer-section">
+        <div class="b-container b-footer-section-wrapper">
+            <div class="l-block b_col_3 ">
+                <div class="b_col_1">
+                    <hl class="title_m">Товары</hl>
+                    <ul class="footer-ul">
+                        <li class="footer-ul-item"><a href="" class="footer-ul-item_a">Сумки</a></li>
+                        <li class="footer-ul-item"><a href="" class="footer-ul-item_a">Перчатки</a></li>
+                        <li class="footer-ul-item"><a href="" class="footer-ul-item_a">Шарфы</a></li>
+                        <li class="footer-ul-item"><a href="" class="footer-ul-item_a">Платки</a></li>
+                        <li class="footer-ul-item"><a href="" class="footer-ul-item_a">Головные уборы</a></li>
+                        <li class="footer-ul-item"><a href="" class="footer-ul-item_a">Аксессуары</a></li>
+                    </ul>
+                </div>
+                <div class="b_col_1">
+                    <hl class="title_m">Бренды</hl>
+                    <ul class="footer-ul">
+                        <li class="footer-ul-item"><a href="" class="footer-ul-item_a">Leo Ventoni</a></li>
+                        <li class="footer-ul-item"><a href="" class="footer-ul-item_a">Palio</a></li>
+                        <li class="footer-ul-item"><a href="" class="footer-ul-item_a">Galady</a></li>
+                        <li class="footer-ul-item"><a href="" class="footer-ul-item_a">Fabretti</a></li>
+                    </ul>
+                </div>
+                <div class="b_col_1">
+                    <hl class="title_m">Сотрудничество</hl>
+                    <ul class="footer-ul">
+                        <li class="footer-ul-item"><a href="" class="footer-ul-item_a">Компания</a></li>
+                        <li class="footer-ul-item"><a href="" class="footer-ul-item_a">О проекте</a></li>
+                        <li class="footer-ul-item"><a href="" class="footer-ul-item_a">Условия</a></li>
+                        <li class="footer-ul-item"><a href="" class="footer-ul-item_a">Оплата</a></li>
+                        <li class="footer-ul-item"><a href="" class="footer-ul-item_a">Доставка</a></li>
+                        <li class="footer-ul-item"><a href="" class="footer-ul-item_a">Контакты</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="l-block b_col_2 b-footer__logo-block">
+                <img src="images/footer_logo.png" alt="" class="b-footer__logo-block__img">
+                <div class="b-footer__logo-block__text">Крупнейший производитель
+                    и продавец кожгалантереи
+                    и аксессуаров в России.</div>
+            </div>
+        </div>
+    </section>
+    <footer class="b-footer">
+        <div class="b-container b-footer-section-wrapper">
+            <div class="l-block b_col_4">
+                &copy; 2012–2013, Компания Leo Ventoni
+            </div>
+            <div class="r-block b_col_1">
+                <a href="" class="b-footer-link">Обратная связь</a>
+            </div>
+        </div>
+    </footer>
+    <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-cookies.min.js" data-require="angularjs@1.4" data-semver="1.4.4"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-sanitize.min.js" data-require="angularjs@1.4" data-semver="1.4.4"></script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="js/autocomplete.js"></script>
+
+    <script data-require="jquery@2.1.4" data-semver="2.1.4" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+    <script type="text/javascript" src="js/js.js"></script>
+
+</body>
+</html>
